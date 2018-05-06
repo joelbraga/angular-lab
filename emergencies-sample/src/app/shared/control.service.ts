@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPatient } from './models';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class ControlService {
@@ -7,24 +8,16 @@ export class ControlService {
   constructor() { }
 
   private patients: IPatient[] = [];
-  private patientsCB: Function[] = [];
-
-  getPatients(cb: Function): void {
-    this.patientsCB.push(cb);
-  }
-
-  updatePatients() {
-    this.patientsCB.forEach(cb => cb(this.patients));
-  }
+  public patientsState = new BehaviorSubject<IPatient[]>([]);
 
   userAdded(patient: IPatient) {
     this.patients = this.patients.concat(patient);
-    this.updatePatients();
+    this.patientsState.next(this.patients);
   }
 
   removePatient(removePatient: IPatient) {
     this.patients = this.patients.filter(patient => patient.id !== removePatient.id);
-    this.updatePatients();
+    this.patientsState.next(this.patients);
   }
 
   changeAttended(changePatient: IPatient) {
@@ -32,16 +25,16 @@ export class ControlService {
     if (index) {
       this.patients[index] = changePatient;
     }
-    this.updatePatients();
+    this.patientsState.next(this.patients);
   }
 
   deleteAttended() {
     this.patients = this.patients.filter(patient => !patient.attended);
-    this.updatePatients();
+    this.patientsState.next(this.patients);
   }
 
   deleteAll() {
     this.patients = [];
-    this.updatePatients();
+    this.patientsState.next(this.patients);
   }
 }

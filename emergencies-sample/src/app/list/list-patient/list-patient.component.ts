@@ -27,7 +27,7 @@ export class ListPatientComponent implements OnInit {
   constructor(public controlService: ControlService) { }
 
   ngOnInit() {
-    this.controlService.getPatients((patients) => this.patients = patients);
+    this.controlService.patientsState.subscribe((patients) => this.patients = patients);
   }
 
 }
