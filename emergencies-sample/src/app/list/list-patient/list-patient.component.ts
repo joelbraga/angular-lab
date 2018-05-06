@@ -1,6 +1,7 @@
+import { ControlService } from './../../shared/control.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IPatient } from '../shared/models';
-import { IPatientAddOption } from '../add-patient/add-patient.component';
+import { IPatient } from '../../shared/models';
+import { IPatientAddOption } from '../../add/add-patient/add-patient.component';
 
 @Component({
   selector: 'app-list-patient',
@@ -8,9 +9,7 @@ import { IPatientAddOption } from '../add-patient/add-patient.component';
     <div *ngFor="let option of options">
       <h5>{{option.text}}</h5>
       <div *ngFor="let patient of (patients | filterPatient:option.value:'severity' | filterPatient:searchTerm:'name')">
-        <app-patient [patient]="patient"
-                    (changeAttend)="changeAttend.emit($event)"
-                    (removePatient)="removePatient.emit($event)"></app-patient>
+        <app-patient [patient]="patient"></app-patient>
       </div>
     </div>
   `
@@ -21,20 +20,14 @@ export class ListPatientComponent implements OnInit {
   options: IPatientAddOption[];
 
   @Input()
-  patients: IPatient[];
-
-  @Input()
   searchTerm: string;
 
-  @Output()
-  removePatient = new EventEmitter<IPatient>();
+  patients: IPatient[] = [];
 
-  @Output()
-  changeAttend = new EventEmitter<IPatient>();
-
-  constructor() { }
+  constructor(public controlService: ControlService) { }
 
   ngOnInit() {
+    this.controlService.getPatients((patients) => this.patients = patients);
   }
 
 }

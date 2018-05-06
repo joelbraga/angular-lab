@@ -1,12 +1,13 @@
+import { ControlService } from './../../shared/control.service';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { IPatient } from '../shared/models';
+import { IPatient } from '../../shared/models';
 
 @Component({
   selector: 'app-patient',
   template: `
-    <input type="checkbox" [(ngModel)]="patient.attended" (click)="changeAttend.emit(patient)"/>
+    <input type="checkbox" [(ngModel)]="patient.attended" (click)="controlService.changeAttended(patient)"/>
     <span [ngClass]="{'patient-attended': patient.attended}">{{patient.name}}</span>
-    <button (click)="removePatient.emit(patient)">Remover</button>
+    <button (click)="controlService.removePatient(patient)">Remover</button>
   `,
   styles: [`
     .patient-attended {
@@ -19,13 +20,7 @@ export class PatientComponent implements OnInit {
   @Input()
   patient: IPatient;
 
-  @Output()
-  removePatient = new EventEmitter<IPatient>();
-
-  @Output()
-  changeAttend = new EventEmitter<IPatient>();
-
-  constructor() { }
+  constructor(public controlService: ControlService) { }
 
   ngOnInit() {
   }

@@ -1,5 +1,6 @@
+import { ControlService } from './../../shared/control.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IPatient } from '../shared/models';
+import { IPatient } from '../../shared/models';
 
 export interface IPatientAddOption {
    value: string;
@@ -22,9 +23,6 @@ export class AddPatientComponent implements OnInit {
   @Input()
   options: IPatientAddOption[];
 
-  @Output()
-  userAdded = new EventEmitter<IPatient>();
-
   result: IPatient = {
     id: '',
     name: '',
@@ -32,14 +30,14 @@ export class AddPatientComponent implements OnInit {
     attended: false,
   };
 
-  constructor() { }
+  constructor(private controlService: ControlService) { }
 
   ngOnInit() {
   }
 
   addUser() {
     const patient = Object.assign({}, this.result, {id: new Date().toISOString(), attended: false});
-    this.userAdded.emit(patient);
+    this.controlService.userAdded(patient);
   }
 
 }
