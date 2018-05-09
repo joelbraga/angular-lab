@@ -1,5 +1,4 @@
-import { DetailSongComponent } from './detail-song/detail-song.component';
-import { DetailAlbumComponent } from './detail-album/detail-album.component';
+import { DetailEntityComponent } from './detail-entity/detail-entity.component';
 import { DetailComponent } from './detail/detail.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -20,10 +19,18 @@ const routes: Routes = [
       },
       {
         path: 'album',
-        component: DetailAlbumComponent,
+        component: DetailEntityComponent,
+        data: {
+          entity: 'album',
+          display: 'album'
+        }
       }, {
         path: 'song',
-        component: DetailSongComponent,
+        component: DetailEntityComponent,
+        data: {
+          entity: 'song',
+          display: 'track'
+        }
       }
     ]
   },

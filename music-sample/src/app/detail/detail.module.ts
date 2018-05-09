@@ -4,8 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DetailRoutingModule } from './detail-routing.module';
-import { DetailSongComponent } from './detail-song/detail-song.component';
-import { DetailAlbumComponent } from './detail-album/detail-album.component';
+import { DetailEntityComponent } from './detail-entity/detail-entity.component';
 
 @NgModule({
   imports: [
@@ -13,6 +12,6 @@ import { DetailAlbumComponent } from './detail-album/detail-album.component';
     DetailRoutingModule,
     RouterModule
   ],
-  declarations: [DetailComponent, DetailSongComponent, DetailAlbumComponent]
+  declarations: [DetailComponent, DetailEntityComponent]
 })
 export class DetailModule { }
